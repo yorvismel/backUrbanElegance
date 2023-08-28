@@ -6,33 +6,26 @@ const path = require("path");
 
 const { DB_USER, DB_PASSWORD, DB_HOST, DB_NAME, DB_RENDER } = process.env;
 
+const sequelize = new Sequelize(
+  `postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/${DB_NAME}`,
+  {
+    logging: false,
+    native: false,
+  }
+);
 
-
-
- 
-       const sequelize = new Sequelize(
-           `postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/${DB_NAME}`,
-           {
-             logging: false,
-             native: false,
-           }
-         );
-
-
-
-  //Con esta cuando ya este deployada
-   console.log(DB_RENDER);
+//Con esta cuando ya este deployada
+console.log(DB_RENDER);
 //    const sequelize = new Sequelize(DB_RENDER, {
 //          logging: false,
 //          dialect: 'postgres',
 //          dialectOptions: {
 //            ssl: {
 //             require: true,
-//              rejectUnauthorized: false 
+//              rejectUnauthorized: false
 //            }
 //          }
 //        });
-
 
 const basename = path.basename(__filename);
 
@@ -47,7 +40,7 @@ fs.readdirSync(path.join(__dirname, "/models"))
     modelDefiners.push(require(path.join(__dirname, "/models", file)));
   });
 
-modelDefiners.forEach(model => model(sequelize));
+modelDefiners.forEach((model) => model(sequelize));
 
 let entries = Object.entries(sequelize.models);
 let capsEntries = entries.map((entry) => [
@@ -58,17 +51,11 @@ sequelize.models = Object.fromEntries(capsEntries);
 
 //los models
 
-const {
-    Users
-  } = sequelize.models;
+const { Users, Products } = sequelize.models;
 
+//Relaciones
 
-  //Relaciones
-
-  
-  
-
- module.exports = {
-    ...sequelize.models,
-    conn: sequelize,
-  };
+module.exports = {
+  ...sequelize.models,
+  conn: sequelize,
+};
