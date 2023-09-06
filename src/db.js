@@ -6,26 +6,26 @@ const path = require("path");
 
 const { DB_USER, DB_PASSWORD, DB_HOST, DB_NAME, DB_RENDER } = process.env;
 
-const sequelize = new Sequelize(
-  `postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/${DB_NAME}`,
-  {
-    logging: false,
-    native: false,
-  }
-);
+// const sequelize = new Sequelize(
+//   `postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/${DB_NAME}`,
+//   {
+//     logging: false,
+//     native: false,
+//   }
+// );
 
 //Con esta cuando ya este deployada
 console.log(DB_RENDER);
-//    const sequelize = new Sequelize(DB_RENDER, {
-//          logging: false,
-//          dialect: 'postgres',
-//          dialectOptions: {
-//            ssl: {
-//             require: true,
-//              rejectUnauthorized: false
-//            }
-//          }
-//        });
+    const sequelize = new Sequelize(DB_RENDER, {
+          logging: false,
+          dialect: 'postgres',
+          dialectOptions: {
+            ssl: {
+             require: true,
+              rejectUnauthorized: false
+            }
+          }
+        });
 
 const basename = path.basename(__filename);
 
